@@ -4,14 +4,14 @@ define([
   'geofeeds/search',
   'views/statusPanel',
   'views/sideBar',
-  'views/widgetModal',
+  'views/modal/widgetRemotestorage',
   'views/box/featureBox',
   'views/map/map',
   'views/map/miniMap',
   'views/modal/userOptions',
   'views/modal/overlayManager',
   'views/modal/featureDetails'
-], function(Backbone, $, SearchFeed, StatusPanel, SideBar, WidgetModal, FeatureBox, Map, MiniMap, UserOptions, OverlayManager, FeatureDetails, AddFeature, renderPos) {
+], function(Backbone, $, SearchFeed, StatusPanel, SideBar, WidgetRemotestorage, FeatureBox, Map, MiniMap, UserOptions, OverlayManager, FeatureDetails, AddFeature, renderPos) {
 
   /**
    * Class: UI
@@ -124,7 +124,7 @@ define([
       /**
        * Property: widgetModal
        */
-      this.widgetModal = new WidgetModal();
+      this.widgetRemotestorage = new WidgetRemotestorage();
     },
 
     /**
@@ -278,12 +278,12 @@ define([
     },
 
     /**
-     * Method: toggleWidgetModal
+     * Method: toggleWidgetRemotestorage
      *
-     * toggles <WidgetModal>
+     * toggles <WidgetRemotestorage>
      */
-    toggleWidgetModal: function(){
-      this.widgetModal.toggle();
+    toggleWidgetRemotestorage: function(){
+      this.widgetRemotestorage.toggle();
     },
 
     /**
