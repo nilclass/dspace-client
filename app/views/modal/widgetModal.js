@@ -1,0 +1,33 @@
+define([
+  'backbone',
+], function(Backbone) {
+
+  /**
+   * Class: WidgetModal
+   */
+  return Backbone.View.extend({
+    el: '#widgetModal',
+
+    refresh: function() {
+    },
+    show: function(){
+      this.refresh();
+      this.$el.css( { 'display': 'block'});
+      this.$el.fadeIn(350);
+      this.visible = true;
+    },
+
+    hide: function(){
+      this.$el.fadeOut(350, function(){ this.$el.hide(); }.bind(this));
+      this.visible = false;
+    },
+
+    toggle: function(){
+      if(this.visible){
+        this.hide();
+      } else {
+        this.show();
+      }
+    }
+  });
+});

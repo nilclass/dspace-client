@@ -1,15 +1,15 @@
 define([
-  'backbone',
   'remoteStorage',
-  'hbs!templates/widgetModal'
-], function(Backbone, remoteStorage, widgetModalTemplate) {
+  'views/modal/widgetModal',
+  'hbs!templates/widgetRemotestorage'
+], function( remoteStorage, WidgetModal, widgetRemotestorageTemplate) {
 
   // SEE http://remotestoragejs.com/doc/code/files/lib/widget/default-js.html
   // FOR AN INCOMPLETE REFERENCE OF THE REMOTESTORAGE WIDGET VIEW API.
 
   var events = remoteStorage.util.getEventEmitter(
     'connect', 'disconnect', 'sync', 'reconnect',
-    'state' // << used internally to link widgetView -> widgetModal
+    'state' // << used internally to link widgetView -> widgetRemotestorage
   );
 
   var widgetView = remoteStorage.util.extend({
@@ -45,12 +45,12 @@ define([
   remoteStorage.widget.setView(widgetView);
 
   /**
-   * Class: WidgetModal
+   * Class: WidgetRemotestorage
    */
-  return Backbone.View.extend({
+  return WidgetModal.extend({
     el: '#widgetModal',
 
-    template: widgetModalTemplate,
+    template: widgetRemotestorageTemplate,
 
     events: {
       'submit #connect-form': 'connectStorage',
@@ -89,26 +89,6 @@ define([
         showSync: (state === 'connected'),
         showDisconnect: (state === 'connected' || state === 'busy')
       }));
-    },
-
-    show: function(){
-      this.refresh();
-      this.$el.css( { 'display': 'block'});
-      this.$el.fadeIn(350);
-      this.visible = true;
-    },
-
-    hide: function(){
-      this.$el.fadeOut(350, function(){ this.$el.hide(); }.bind(this));
-      this.visible = false;
-    },
-
-    toggle: function(){
-      if(this.visible){
-        this.hide();
-      } else {
-        this.show();
-      }
     }
   });
 });

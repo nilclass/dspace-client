@@ -4,14 +4,15 @@ define([
   'geofeeds/search',
   'views/statusPanel',
   'views/sideBar',
-  'views/widgetModal',
+  'views/modal/widgetRemotestorage',
   'views/box/featureBox',
   'views/map/map',
   'views/map/miniMap',
   'views/modal/userOptions',
   'views/modal/overlayManager',
-  'views/modal/featureDetails'
-], function(Backbone, $, SearchFeed, StatusPanel, SideBar, WidgetModal, FeatureBox, Map, MiniMap, UserOptions, OverlayManager, FeatureDetails, AddFeature, renderPos) {
+  'views/modal/featureDetails',
+  'views/modal/addFeature'
+], function(Backbone, $, SearchFeed, StatusPanel, SideBar, WidgetRemotestorage, FeatureBox, Map, MiniMap, UserOptions, OverlayManager, FeatureDetails, AddFeature ) {
 
   /**
    * Class: UI
@@ -47,7 +48,7 @@ define([
       , 'click #userOptions': 'showUserOptions'
       , 'click #modal-close': 'closeModal'
       , 'submit #searchForm': 'createSearch'
-      , 'contextmenu #widgetBar': 'toggleWidgetModal'
+      , 'click #widgetBar': 'toggleWidgetRemotestorage'
     },
 
     /**
@@ -124,7 +125,7 @@ define([
       /**
        * Property: widgetModal
        */
-      this.widgetModal = new WidgetModal();
+      this.widgetRemotestorage = new WidgetRemotestorage();
     },
 
     /**
@@ -177,7 +178,7 @@ define([
      */
     createFeature: function(location){
       var feature = this.world.newFeature(location);
-      this.modal = new FeatureDetails({ feature: feature });
+      this.modal = new AddFeature({ feature: feature });
       this.modal.show();
     },
 
@@ -278,12 +279,12 @@ define([
     },
 
     /**
-     * Method: toggleWidgetModal
+     * Method: toggleWidgetRemotestorage
      *
-     * toggles <WidgetModal>
+     * toggles <WidgetRemotestorage>
      */
-    toggleWidgetModal: function(){
-      this.widgetModal.toggle();
+    toggleWidgetRemotestorage: function(){
+      this.widgetRemotestorage.toggle();
     },
 
     /**
