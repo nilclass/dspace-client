@@ -10,8 +10,9 @@ define([
   'views/map/miniMap',
   'views/modal/userOptions',
   'views/modal/overlayManager',
-  'views/modal/featureDetails'
-], function(Backbone, $, SearchFeed, StatusPanel, SideBar, WidgetRemotestorage, FeatureBox, Map, MiniMap, UserOptions, OverlayManager, FeatureDetails, AddFeature, renderPos) {
+  'views/modal/featureDetails',
+  'views/modal/addFeature'
+], function(Backbone, $, SearchFeed, StatusPanel, SideBar, WidgetRemotestorage, FeatureBox, Map, MiniMap, UserOptions, OverlayManager, FeatureDetails, AddFeature ) {
 
   /**
    * Class: UI
@@ -48,7 +49,6 @@ define([
       , 'click #modal-close': 'closeModal'
       , 'submit #searchForm': 'createSearch'
       , 'click #widgetBar': 'toggleWidgetRemotestorage'
-      , 'contextmenu #widgetBar': 'toggleWidgetModal'
     },
 
     /**
@@ -178,7 +178,7 @@ define([
      */
     createFeature: function(location){
       var feature = this.world.newFeature(location);
-      this.modal = new FeatureDetails({ feature: feature });
+      this.modal = new AddFeature({ feature: feature });
       this.modal.show();
     },
 
