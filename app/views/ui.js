@@ -47,6 +47,7 @@ define([
       , 'click #userOptions': 'showUserOptions'
       , 'click #modal-close': 'closeModal'
       , 'submit #searchForm': 'createSearch'
+      , 'click #widgetBar': 'toggleWidgetRemotestorage'
       , 'contextmenu #widgetBar': 'toggleWidgetModal'
     },
 
