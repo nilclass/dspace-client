@@ -18,10 +18,9 @@
   {{/keyValue}}
  </div>
  <div class="uiOption" style="clear: both">
-  <button class="first" data-command="featureLike">Like</button>
-  <button data-command="featureDislike">Dislike</button>
-  <button data-command="featureEdit">Edit</button>
-  <button class="last" data-command="disconnect">Start Navigation</button>
+   {{#commands}}
+   <button class="{{class}}" data-command="{{command}}">{{label}}</button>
+   {{/commands}}
  </div>
  <div class="uiOption" style="clear: both">
   <button class="first" data-command="featureLike"> << Show previous feature in collection</button>

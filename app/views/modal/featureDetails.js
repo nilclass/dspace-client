@@ -1,10 +1,10 @@
 define([
   'underscore',
+  'ender',
   'views/modal/base',
   'hbs!templates/featureDetails',
   'hbs!templates/featureDetailsEdit'
-  
-], function(_, BaseModal, showTemplate, editTemplate) {
+], function(_, $, BaseModal, showTemplate, editTemplate) {
 
 
   /**
@@ -13,7 +13,8 @@ define([
   var FeatureDetails = BaseModal.extend({
 
     events: {
-      'click *[data-command="save"]': 'saveAction'
+      'click *[data-command="save"]': 'saveAction',
+      'click button': 'callCommand'
     },
 
     initialize: function(options) {
@@ -33,9 +34,22 @@ define([
         this.template = showTemplate;
       }
 
+      this.commands = [];
+      this.commandActions = {};
+      for(var command in options.commands) {
+        this.commands.push(_.extend({
+          command: command
+        }, options.commands[command]));
+        this.commandActions[command] = options.commands[command].action;
+      }
+      this.commands[0]['class'] = 'first';
+      this.commands[this.commands.length - 1]['class'] = 'last';
+
       this.__defineGetter__('data', function() {
         return _.extend(
-          { feature: options.feature.toJSON() },
+          { feature: options.feature.toJSON(),
+            commands: this.commands
+          },
           this._data,
           options.feature.getLatLon()
         );
@@ -49,6 +63,13 @@ define([
       });
       console.log('save', properties);
       this.feature.save({ properties: properties });
+    },
+
+    callCommand: function(event) {
+      var commandName = $(event.target).attr('data-command');
+      if(commandName && this.commandActions[commandName]) {
+        this.commandActions[commandName](this.options.feature);
+      }
     }
 
   });

@@ -141,7 +141,39 @@ define([
           );
         });
 
-      }, 0);
+        dspace.declareHook('featureCommands', function(commands) {
+          for(var commandName in commands) {
+            this.addFeatureCommand(commandName, commands[commandName]);
+          }
+        }.bind(this));
+
+      }.bind(this), 0);
+    },
+
+    // feature commands == buttons in FeatureDetails box.
+    // can also be added through 'featureCommands' hook.
+
+    _featureCommands: {
+
+      'feature-like': {
+        label: "Like",
+        action: function() { /* TODO! */ }
+      },
+
+      'feature-dislike': {
+        label: "Dislike",
+        action: function() { /* TODO! */ }
+      },
+
+      'feature-edit': {
+        label: "Edit",
+        action: function() { /* TODO! */ }
+      }
+
+    },
+
+    addFeatureCommand: function(commandName, definition) {
+      this._featureCommands[commandName] = definition;
     },
 
     /**
@@ -182,7 +214,10 @@ define([
     showFeatureDetails: function(uuid){
       var feature = this.world.getFeature(uuid);
       if(feature) {
-        this.modal = new FeatureDetails({ feature: feature });
+        this.modal = new FeatureDetails({
+          feature: feature,
+          commands: this._featureCommands
+        });
         this.modal.show();
       }
     },
