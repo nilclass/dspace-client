@@ -3,6 +3,16 @@ define(['./src/gpxRouteFeed'], function(GPXRouteFeed) {
 
   var routinoURL;
 
+  function navigateTo(location) {
+    dspace.world.addFeed(dspace.world.createFeed({
+      type: 'GPXRoute',
+      from: dspace.world.user.feed.avatar.getLatLon(),
+      to: location,
+      url: routinoURL
+    }), true);
+  }
+
+
   dspace.plugin('navigation', {
     name: "Navigation",
     description: "Route calculation & navigation, powered by a routino backend",
@@ -22,17 +32,21 @@ define(['./src/gpxRouteFeed'], function(GPXRouteFeed) {
 
       mapCommands: {
         'navigate-here': function(point, location) {
-          dspace.world.addFeed(dspace.world.createFeed({
-            type: 'GPXRoute',
-            from: dspace.world.user.feed.avatar.getLatLon(),
-            to: location,
-            url: routinoURL
-          }, true));
+          navigateTo(location);
         }
       },
 
       mapContextItems: {
         'navigate-here': "Navigate here"
+      },
+
+      featureCommands: {
+        'start-navigation': {
+          label: "Start Navigation",
+          action: function(feature) {
+            navigateTo(feature.getLatLon());
+          }
+        }
       }
     }
   });
